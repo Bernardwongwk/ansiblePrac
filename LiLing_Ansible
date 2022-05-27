@@ -1,0 +1,33 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Create a directory if it does not exist
+    file:
+      path: ~/Ansible
+      state: directory
+
+  - name: Creating a text file with content
+    copy:
+      dest: "~/Ansible/test01.txt"
+      content: |
+        Ansible is manageable!
+        
+
+  - name: Create another file
+    file:
+      path: "~/Ansible/{{ item }}"
+      state: touch
+    with_items:
+    - test02.txt
+    
+
+  - name: Add input to test02 file
+    lineinfile:
+      path: /Users/mdtutorials2/Documents/Ansible/Input.txt
+      line: 'Added Line 1'
+      insertbefore: BOF
+
+Input.txt after execution
+-------------------------
+Added Line 1
+Existing line

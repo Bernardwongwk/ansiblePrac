@@ -1,0 +1,53 @@
+---
+- name: creating departments with loop
+  hosts: localhost
+  become: true
+  tasks:
+   - group:
+      name: "{{ item }}"
+      state: present
+     loop:
+      - frontend
+      - operations
+      - backend
+
+   - ansible.builtin.user:
+      name: Manager_Tan
+      shell: /bin/bash
+      groups: frontend,operations,backend
+      append: yes 
+      
+   - ansible.builtin.user:
+      name: OpsLead_Lim
+      shell: /bin/bash
+      groups: operations
+
+   - ansible.builtin.user:
+      name: TeamLead_Wong
+      shell: /bin/bash
+      groups: backend
+
+
+# - name: Create ssh-keygen by a remote user and add that key to the server,
+#   hosts: localhost
+#   tasks:
+#     - authorized_key:
+#        user: Manager_Tan
+#        state: present
+#        key: "{{ lookup('file', '/./user_pub_key') }}"
+
+# - name: Create ssh-keygen by a remote user and add that key to the server,
+#   hosts: localhost
+#   tasks:
+#     - authorized_key:
+#        user: OpsLead_Lim
+#        state: present
+#        key: "{{ lookup('file', '/./user_pub_key') }}"
+
+# - name: Create ssh-keygen by a remote user and add that key to the server,
+#   hosts: localhost
+#   tasks:
+#     - authorized_key:
+#        user: TeamLead_Wong
+#        state: present
+#        key: "{{ lookup('file', '/./user_pub_key') }}"

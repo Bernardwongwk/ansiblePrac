@@ -1,0 +1,14 @@
+#with items creating users as createUsersLoop.yml
+---
+- name: creating users with loop
+  hosts: localhost
+  become: true
+  tasks:
+   - file: 
+      path: "{{ item }}"
+      state: touch
+     loop:
+      - John
+      - Matthew
+      - Luke
+      - Mark
